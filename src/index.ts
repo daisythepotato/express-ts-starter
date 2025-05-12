@@ -1,19 +1,17 @@
+//서버 진입점 : 프로젝트의 시작, 필요한 패키지와 라우터 불러오기
+
 import express from 'express';
+import indexRouter from './routes/index';
+import usersRouter from './routes/users';
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
-app.get('/', (req, res) => {
-  res.send('Server is running!');
-});
+app.use(express.json());
 
-app.get('/users', (req, res) => {
-  res.json([
-    { id: 1, name: 'Alice' },
-    { id: 2, name: 'Bob' }
-  ]);
-});
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
 
 app.listen(PORT, () => {
-  console.log(`Server is running at http://localhost:${PORT}`);
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
