@@ -1,4 +1,5 @@
 import express from 'express';
+<<<<<<< HEAD
 import dotenv from "dotenv";
 import { connectDB } from './db';
 import indexRouter from './routes/index';
@@ -26,3 +27,23 @@ app.use('/ping', pingRouter);
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
 });
+=======
+
+const app = express();
+const PORT = 3000;
+
+app.get('/', (req, res) => {
+  res.send('Server is running!');
+});
+
+app.get('/users', (req, res) => {
+  res.json([
+    { id: 1, name: 'Alice' },
+    { id: 2, name: 'Bob' }
+  ]);
+});
+
+app.listen(PORT, () => {
+  console.log(`Server is running at http://localhost:${PORT}`);
+});
+>>>>>>> 87c3d5b94157a8ba501dd911e0eccdd32bf1fb88
