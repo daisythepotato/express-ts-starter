@@ -1,5 +1,6 @@
+//서버 진입점 : 프로젝트의 시작, 필요한 패키지와 라우터 불러오기
+
 import express from 'express';
-<<<<<<< HEAD
 import dotenv from "dotenv";
 import { connectDB } from './db';
 import indexRouter from './routes/index';
@@ -27,23 +28,15 @@ app.use('/ping', pingRouter);
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
 });
-=======
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
-app.get('/', (req, res) => {
-  res.send('Server is running!');
-});
+app.use(express.json());
 
-app.get('/users', (req, res) => {
-  res.json([
-    { id: 1, name: 'Alice' },
-    { id: 2, name: 'Bob' }
-  ]);
-});
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
 });
->>>>>>> 87c3d5b94157a8ba501dd911e0eccdd32bf1fb88
