@@ -3,7 +3,7 @@ import express from 'express';
 const router = express.Router();
 
 // GET /ping : 서버 작동 상태 점검하기(헬스 체크(Health Check))
-router.get('/ping', (req, res) => {
+router.get('/', (req, res) => {
     res.json({ message: 'pong' });
 });
 

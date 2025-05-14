@@ -25,6 +25,7 @@ router.get('/:id', (req, res) => {
     }
 });
 
+// PUT /users/:id : users 배열 중 입력한 id에 해당하는 유저의 name 수정하기
 router.put('/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const { name } = req.body;
