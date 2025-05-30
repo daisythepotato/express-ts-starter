@@ -5,6 +5,7 @@ import connectDB from './db';
 import helloRouter from './routes/hello';
 import indexRouter from './routes/index';
 import usersRouter from './routes/users';
+import statusRouter from './routes/status';
 import morgan from 'morgan';
 
 const app = express();
@@ -23,6 +24,7 @@ app.use(express.json());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/hello', helloRouter);
+app.use('/status', statusRouter);
 
 
 // 서버 실행
