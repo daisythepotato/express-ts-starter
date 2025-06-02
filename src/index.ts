@@ -26,7 +26,6 @@ app.use('/users', usersRouter);
 app.use('/hello', helloRouter);
 app.use('/status', statusRouter);
 
-
 // 서버 실행
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);

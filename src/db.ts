@@ -6,7 +6,7 @@ dotenv.config(); // .env 읽기
 const connectDB = async () => {
   try {
     await mongoose.connect(process.env.MONGODB_URI || "", {
-      dbName: "mansoraedam03", // 위 URI의 DB 이름과 일치하게
+      dbName: "ouchdang", // 위 URI의 DB 이름과 일치하게
     });
     console.log("MongoDB 연결 성공");
   } catch (err) {
