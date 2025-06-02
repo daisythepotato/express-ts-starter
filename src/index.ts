@@ -6,6 +6,7 @@ import helloRouter from './routes/hello';
 import indexRouter from './routes/index';
 import usersRouter from './routes/users';
 import statusRouter from './routes/status';
+import authRouter from './routes/auth';
 import morgan from 'morgan';
 
 const app = express();
@@ -25,6 +26,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/hello', helloRouter);
 app.use('/status', statusRouter);
+app.use('/auth', authRouter);
 
 // 서버 실행
 app.listen(PORT, () => {
