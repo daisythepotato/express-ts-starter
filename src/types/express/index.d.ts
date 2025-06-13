@@ -1,10 +1,12 @@
-// src/types/express/index.d.ts
-import { JwtPayload } from '../../middlewares/authMiddleware';
+import { JwtPayload } from 'jsonwebtoken';
 
 declare global {
   namespace Express {
     interface Request {
-      user?: JwtPayload;
+      user?: JwtPayload & {
+        id: string;
+        role: 'user' | 'admin';
+      };
     }
   }
 }
