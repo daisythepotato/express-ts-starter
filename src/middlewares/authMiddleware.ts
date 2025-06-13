@@ -1,36 +1,26 @@
-// src/middlewares/authMiddleware.ts
 import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
-import { CustomError } from '../middlewares/CustomError';
+import jwt, { JwtPayload } from 'jsonwebtoken';
+import { CustomError } from './CustomError';
 
-// src/middlewares/authMiddleware.ts
-export interface JwtPayload {
+const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+
+interface DecodedUser extends JwtPayload {
   id: string;
   role: 'user' | 'admin';
 }
 
-export const authMiddleware = (
-  req: Request & { user?: JwtPayload },
-  res: Response,
-  next: NextFunction
-) => {
-  const authHeader = req.headers.authorization;
+export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
+    const token = req.cookies.token; // 쿠키에서 토큰 꺼내기
+    if (!token) throw new CustomError('인증 토큰이 없습니다.', 401);
 
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return next(new CustomError('토큰이 존재하지 않습니다다.', 401));
-  }
-
-  //공백 기준으로 나눠서 실제 토큰만 추출
-  const token = authHeader.split(' ')[1];
-
-  try {
-    // 토큰 유효성 검증증
-    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
-    req.user = decoded; // 사용자 정보 req.user에 저장장
-    next();
-  } catch (err) {
-    next(new CustomError('유효하지 않은 토큰입니다.', 401));
-  }
+    try {
+        const decoded = jwt.verify(token, JWT_SECRET);
+        if (typeof decoded === 'string') {
+            throw new CustomError('유효하지 않은 토큰입니다.', 401);
+        }
+        req.user = decoded as DecodedUser;
+        next();
+    } catch (err) {
+        throw new CustomError('유효하지 않은 토큰입니다', 401);
+    }
 };
-
-
