@@ -2,10 +2,10 @@ import { Request, Response, NextFunction } from 'express';
 import * as AuthService from '../services/AuthService';
 
 export const signup = async (req: Request, res: Response, next: NextFunction) => {
-  const { email, password }  = req.body;
   try {
-    const user = await AuthService.signupUser(email, password);
-    res.json(user);
+    const { name, email, password, role } = req.body;
+    const newUser = await AuthService.signupUser(name, email, password, role);
+    res.status(201).json({ message: '회원가입 완료', userId: newUser._id });
   } catch (err) {
     next(err);
   }
