@@ -14,7 +14,7 @@ export const createUser = async (name: string) => {
   if (!name) throw new CustomError('Name is required', 400);
   const newUser = new User({ name });
   return newUser.save();
-};
+}; 
 
 export const updateUser = async (id: string, name: string) => {
   if (!name) throw new CustomError('Name is required', 400);
