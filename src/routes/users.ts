@@ -1,6 +1,6 @@
 import express from 'express';
 import * as UserController from '../controllers/UserController';
-import { authMiddleware } from '../middlewares/AuthMiddleware';
+import { authMiddleware } from '../middlewares/authMiddleware';
 import { isAdminMiddleware } from '../middlewares/isAdminMiddleware';
 import { getProfileById, getMe, getProtected, getAdminPage } from '../controllers/UserController';
 

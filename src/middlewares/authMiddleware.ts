@@ -14,13 +14,13 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
     if (!token) throw new CustomError('인증 토큰이 없습니다.', 401);
 
     try {
-        const decoded = jwt.verify(token, JWT_SECRET);
-        if (typeof decoded === 'string') {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET!);
+      if (typeof decoded === 'string') {
             throw new CustomError('유효하지 않은 토큰입니다.', 401);
-        }
-        req.user = decoded as DecodedUser;
-        next();
+      }
+      req.user = decoded as DecodedUser;
+      next();
     } catch (err) {
-        throw new CustomError('유효하지 않은 토큰입니다', 401);
+      throw new CustomError('유효하지 않은 토큰입니다.', 401);
     }
 };
