@@ -1,11 +1,16 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { User } from '../models/User';
+import * as AuthController from '../controllers/AuthController';
+import User from '../models/User';
 import { authMiddleware } from '../middlewares/authMiddleware';
 import { getUserById } from '../services/UserService';
 
 const router = express.Router();
+
+router.get('/me', authMiddleware, AuthController.getMe);
+router.post('/logout', AuthController.logout);
+
 
 // 회원가입
 router.post('/signup', async (req, res) => {
