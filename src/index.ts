@@ -5,13 +5,25 @@ import connectDB from './db';
 import helloRouter from './routes/hello';
 import indexRouter from './routes/index';
 import usersRouter from './routes/users';
+import authRouter from './routes/auth';
 import morgan from 'morgan';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // 미들웨어 공통 로그 추가
 app.use(morgan('dev'));
+
+//CORS: 다른 출처 간 요청 허용 제어(쿠키 요청 허용)
+app.use(cors({
+  origin: 'http://localhost:3000',  // 프론트 주소
+  credentials: true
+}));
+
+//쿠키 읽기 미들웨어 등록
+app.use(cookieParser());
 
 // DB 연결
 connectDB();
@@ -23,6 +35,7 @@ app.use(express.json());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/hello', helloRouter);
+app.use('/auth', authRouter);
 
 
 // 서버 실행
