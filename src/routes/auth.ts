@@ -14,13 +14,13 @@ router.post('/logout', AuthController.logout);
 
 // 회원가입
 router.post('/signup', async (req, res) => {
-  const { username, password, name } = req.body;
+  const { email, password, name } = req.body;
 
-  const existing = await User.findOne({ username });
+  const existing = await User.findOne({ email });
   if (existing) return res.status(409).json({ message: '이미 존재하는 사용자' });
 
   const hashedPw = await bcrypt.hash(password, 10);
-  const user = new User({ username, password: hashedPw, name });
+  const user = new User({ email, password: hashedPw, name });
   await user.save();
 
   res.status(201).json({ message: '회원가입 성공' });
@@ -28,9 +28,9 @@ router.post('/signup', async (req, res) => {
 
 // 로그인
 router.post('/login', async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
-  const user = await User.findOne({ username });
+  const user = await User.findOne({ email });
   if (!user) return res.status(401).json({ message: '사용자 없음' });
 
   const isMatch = await bcrypt.compare(password, user.password);
@@ -100,9 +100,10 @@ router.get('/profile', authMiddleware, async (req, res, next) => {
     }
 
     res.json({
-      username: user.username,
+      email: user.email,
       name: user.name,
       id: user._id,
+      role: user.role,
     });
   } catch (err) {
     next(err);
